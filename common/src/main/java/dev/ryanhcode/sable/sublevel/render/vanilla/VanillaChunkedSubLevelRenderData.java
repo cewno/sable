@@ -8,12 +8,14 @@ import dev.ryanhcode.sable.companion.math.BoundingBox3i;
 import dev.ryanhcode.sable.companion.math.BoundingBox3ic;
 import dev.ryanhcode.sable.companion.math.JOMLConversion;
 import dev.ryanhcode.sable.companion.math.Pose3dc;
+import dev.ryanhcode.sable.compatibility.SableIrisCompat;
 import dev.ryanhcode.sable.mixin.sublevel_render.RenderSectionAccessor;
 import dev.ryanhcode.sable.mixinterface.sublevel_render.vanilla.RenderSectionExtension;
 import dev.ryanhcode.sable.sublevel.ClientSubLevel;
 import dev.ryanhcode.sable.sublevel.render.SubLevelRenderData;
 import dev.ryanhcode.sable.sublevel.water_occlusion.WaterOcclusionContainer;
 import dev.ryanhcode.sable.sublevel.water_occlusion.WaterOcclusionRegion;
+import foundry.veil.api.compat.IrisCompat;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.client.Camera;
@@ -55,11 +57,11 @@ public class VanillaChunkedSubLevelRenderData implements SubLevelRenderData {
     /**
      * All render sections this renderer stores
      */
-    private final ObjectArrayList<SectionRenderDispatcher.RenderSection> allRenderSections = new ObjectArrayList<>();
+    private final ObjectList<SectionRenderDispatcher.RenderSection> allRenderSections = new ObjectArrayList<>();
     /**
      * All dirty render sections this renderer stores
      */
-    private final ObjectArrayList<SectionRenderDispatcher.RenderSection> dirtyRenderSections = new ObjectArrayList<>();
+    private final ObjectList<SectionRenderDispatcher.RenderSection> dirtyRenderSections = new ObjectArrayList<>();
     /**
      * The grid of render sections
      */
@@ -318,6 +320,10 @@ public class VanillaChunkedSubLevelRenderData implements SubLevelRenderData {
         if (shader.MODEL_VIEW_MATRIX != null) {
             shader.MODEL_VIEW_MATRIX.set(modelView.mul(transform, MODEL_MATRIX));
             shader.MODEL_VIEW_MATRIX.upload();
+
+            if (IrisCompat.isLoaded()) {
+                SableIrisCompat.refreshModelMatrices(shader);
+            }
         }
 
         // TODO: sorting

@@ -1,6 +1,3 @@
- - Fix items being blurry and red on some Intel systems
- - Ship natives so Intel Macs can load Sable Rapier
- - Fix compatibility issues with Lithium causing crashes on sub-level loading
- - Fix block entities not rendering on sub-levels with Sodium Extras installed
- - Fix a duplication bug with assembling un-generated loot chests
- - Allow paddling on sub-levels in Creative mode
+ - Allow for the entire UDP pipeline to be disabled
+ - Adjust compatibility with Create's Mechanical Harvester
+ - Tweak assembly handling
